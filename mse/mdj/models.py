@@ -8,7 +8,7 @@ class Agente(models.Model):
             ('raspberry-pi-model-b', 'Raspberry-Pi-Model-B'),
             )
     endereco_ip = models.GenericIPAddressField(protocol='IPv4')
-    tipo = models.CharField(max_legth=250,
+    tipo = models.CharField(max_length=250,
                             choices=TIPOS_AGENTES,
                             default='raspberry-pi-model-b')
     class Meta:
