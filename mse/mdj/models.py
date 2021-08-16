@@ -15,6 +15,5 @@ class Agente(models.Model):
         ordering = ('endereco_ip',)
 
     def __str__(self):
-        str_ip = str(self.endereco_ip)
-        return self.str_ip
+        return self.endereco_ip
 
