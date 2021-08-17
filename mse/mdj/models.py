@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.urls import reverse
+from django.utils.text import slugify
 
 
 class Agente(models.Model):
@@ -55,6 +57,10 @@ class Equipamento(models.Model):
     def __str__(self):
         return self.nome
 
+    @property
+    def apelido(self):
+        return slugify(self.nome)
+
 
 class Evento(models.Model):
     inicio = models.DateTimeField(default=timezone.now())
@@ -62,10 +68,29 @@ class Evento(models.Model):
     equipamento = models.ForeignKey('Equipamento',
                                     on_delete=models.CASCADE,
                                     related_name='evento')
+    @property
+    def tag(self):
+        return f'{self.inicio.year}{self.inicio.month}{self.inicio.day}{self.inicio.hour}{self.inicio.minute}{self.inicio.second}{self.fim.minute}{self.fim.second}'
+
     class Meta:
         ordering = ('inicio',)
 
     def __str__(self):
         return str(self.inicio)
 
+    def get_absolute_url(self):
+        return reverse('mdj:detalhe_de_evento',
+                       args=[int(self.equipamento.id),
+                             int(self.inicio.year),
+                             int(self.inicio.month),
+                             int(self.inicio.day),
+                             int(self.inicio.hour),
+                             int(self.inicio.minute),
+                             int(self.inicio.second),
+                             int(self.fim.year),
+                             int(self.fim.month),
+                             int(self.fim.day),
+                             int(self.fim.hour),
+                             int(self.fim.minute),
+                             int(self.fim.second)])
 
