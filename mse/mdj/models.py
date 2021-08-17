@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Agente(models.Model):
     TIPOS_AGENTES = (
-            ('raspberry-pi-model-b', 'Raspberry-Pi-Model-B'),
+        ('raspberry-pi-model-b', 'Raspberry-Pi-Model-B'),
     )
     endereco_ip = models.GenericIPAddressField(protocol='IPv4')
     nome = models.CharField(max_length=250,
@@ -13,8 +13,9 @@ class Agente(models.Model):
     tipo = models.CharField(max_length=250,
                             choices=TIPOS_AGENTES,
                             default='raspberry-pi-model-b')
-    agente_localidade = models.ForeignKey('Localidade', 
-                                          on_delete=models.CASCADE)
+    localidade = models.ForeignKey('Localidade', 
+                                   on_delete=models.CASCADE,
+                                   related_name='agente')
     class Meta:
         ordering = ('nome',)
 
@@ -45,8 +46,9 @@ class Equipamento(models.Model):
                             default='disjuntor')
     modelo = models.CharField(max_length=250,
                               default='modelo-a')
-    equipamento_localidade = models.ForeignKey('Localidade', 
-                                               on_delete=models.CASCADE)
+    localidade = models.ForeignKey('Localidade', 
+                                   on_delete=models.CASCADE,
+                                   related_name='equipamento')
     class Meta:
         ordering = ('nome',)
 
@@ -55,14 +57,15 @@ class Equipamento(models.Model):
 
 
 class Evento(models.Model):
-    inicio = models.DateTimeField(auto_now_add=True)
-    fim = models.DateTimeField(auto_now_add=True)
-    evento_equipamento = models.ForeignKey('Equipamento',
-                                           on_delete=models.CASCADE)
+    inicio = models.DateTimeField(default=timezone.now())
+    fim = models.DateTimeField(default=timezone.now())
+    equipamento = models.ForeignKey('Equipamento',
+                                    on_delete=models.CASCADE,
+                                    related_name='evento')
     class Meta:
         ordering = ('inicio',)
 
     def __str__(self):
-        return self.inicio
+        return str(self.inicio)
 
 
