@@ -1,0 +1,16 @@
+{% extends "mdj/base.html" %}
+
+{% block title %}Lista de Eventos{% endblock %}
+{% block content %} 
+    <h1>Lista de Eventos</h1>
+    {% for evento in eventos %}
+            <h2>
+                <a href="{{ evento.get_absolute_url }}">
+                    {{ evento.tag }}
+                </a>
+            </h2>
+        <p class="date">
+            Equipamento: {{ evento.equipamento }} - Início: {{ evento.inicio }} - Fim {{ evento.fim }}
+        </p>
+    {% endfor %}
+{% endblock %}

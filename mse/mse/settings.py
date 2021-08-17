@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mdj.apps.MdjConfig',
     'django.contrib.postgres',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

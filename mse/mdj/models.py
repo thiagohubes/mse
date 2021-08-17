@@ -68,6 +68,9 @@ class Evento(models.Model):
     equipamento = models.ForeignKey('Equipamento',
                                     on_delete=models.CASCADE,
                                     related_name='evento')
+    # access_token = models.CharField(max_length=100)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+
     @property
     def tag(self):
         return f'{self.inicio.year}{self.inicio.month}{self.inicio.day}{self.inicio.hour}{self.inicio.minute}{self.inicio.second}{self.fim.minute}{self.fim.second}'

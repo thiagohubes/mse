@@ -1,0 +1,8 @@
+{% extends "mdj/base.html" %}
+{% block title %}{{ evento.tag }}{% endblock %}
+{% block content %}
+    <h1>{{ evento.tag }}</h1>
+    <p class="date">
+    Equipamento: {{evento.equipamento}} Início: {{evento.inicio}} Fim: {{evento.fim}}
+    </p>
+{% endblock %}
