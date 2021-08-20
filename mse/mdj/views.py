@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Evento, Equipamento, Localidade, Agente
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from .serializers import EventoSerializer, EquipamentoSerializer, LocalidadeSerializer, AgenteSerializer
+
 
 def lista_de_eventos(request):
     eventos = Evento.objects.all()
@@ -9,25 +10,14 @@ def lista_de_eventos(request):
                   'mdj/evento/lista.html',
                   {'eventos': eventos})
 
-def detalhe_de_evento(request, eqpt, ano_ini, mes_ini, dia_ini, hora_ini, min_ini, seg_ini, ano_fim, mes_fim, dia_fim, hora_fim, min_fim, seg_fim):
-    evento = get_object_or_404(Evento, 
-                               equipamento__id=eqpt,
-                               inicio__year=ano_ini,
-                               inicio__month=mes_ini,
-                               inicio__day=dia_ini,
-                               inicio__hour=hora_ini,
-                               inicio__minute=min_ini,
-                               inicio__second=seg_ini,
-                               fim__year=ano_fim,
-                               fim__month=mes_fim,
-                               fim__day=dia_fim,
-                               fim__hour=hora_fim,
-                               fim__minute=min_fim,
-                               fim__second=seg_fim)
+def detalhe_de_evento(request, sequencia):
+    evento = get_object_or_404(Evento, sequencia=sequencia)
     return render(request,
                   'mdj/evento/detalhe.html',
                   {'evento': evento})
 
+#class EventoList(generics.ListCreateAPIView):
+# ModelViewSet provê .list() .create() .retrieve() .update() e .destroy()
 class EventoViewSet(viewsets.ModelViewSet):
     queryset = Evento.objects.all().order_by('inicio')
     serializer_class = EventoSerializer
@@ -35,7 +25,12 @@ class EventoViewSet(viewsets.ModelViewSet):
 
 class EquipamentoViewSet(viewsets.ModelViewSet):
     queryset = Equipamento.objects.all().order_by('nome')
-    serializer_class = EquipamentoSerializer
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return EquipamentoReadSerializer
+    #serializer_class = EquipamentoSerializer
+        return EquipamentoSerializer
+
 
 
 class LocalidadeViewSet(viewsets.ModelViewSet):

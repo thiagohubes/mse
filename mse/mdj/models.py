@@ -68,6 +68,7 @@ class Evento(models.Model):
     equipamento = models.ForeignKey('Equipamento',
                                     on_delete=models.CASCADE,
                                     related_name='evento')
+    sequencia = models.BigIntegerField(default=1)
     # access_token = models.CharField(max_length=100)
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -82,18 +83,5 @@ class Evento(models.Model):
         return str(self.inicio)
 
     def get_absolute_url(self):
-        return reverse('mdj:detalhe_de_evento',
-                       args=[int(self.equipamento.id),
-                             int(self.inicio.year),
-                             int(self.inicio.month),
-                             int(self.inicio.day),
-                             int(self.inicio.hour),
-                             int(self.inicio.minute),
-                             int(self.inicio.second),
-                             int(self.fim.year),
-                             int(self.fim.month),
-                             int(self.fim.day),
-                             int(self.fim.hour),
-                             int(self.fim.minute),
-                             int(self.fim.second)])
+        return reverse('mdj:detalhe_de_evento', args=[self.sequencia,])
 

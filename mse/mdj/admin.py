@@ -15,5 +15,5 @@ class EquipamentoAdmin(admin.ModelAdmin):
 
 @admin.register(Evento)
 class EventoAdmin(admin.ModelAdmin):
-    list_display = ('tag', 'inicio', 'fim', 'equipamento')
+    list_display = ('sequencia', 'tag', 'inicio', 'fim', 'equipamento')
 
