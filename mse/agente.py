@@ -2,11 +2,14 @@ from datetime import datetime
 import requests
 
 
-seq = 1
 nome_eq = "DJ XYZ"
 tipo_eq = "disjuntor"
 mode_eq = "modelo-a"
 nome_lo = "SE XYZ"
+seq = 0
+
+with open('sequencia.txt', 'r+') as f:
+    seq = int(f.read())
 
 try:
     while True:
@@ -49,5 +52,10 @@ try:
         seq += 1
 
 except KeyboardInterrupt:
-    print("Pressionado CTRL+C. Fim do programa.")
+    print("\nPressionado CTRL+C. Fim do programa.\n")
+
+finally:
+    with open('sequencia.txt', 'r+') as f:
+        f.truncate(0)
+        f.write(str(seq))
     exit()
