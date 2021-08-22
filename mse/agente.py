@@ -33,14 +33,7 @@ try:
         # send
         url = "http://127.0.0.1:8000/mdj/api/evento/"
         data = {
-            "equipamento": {
-                "nome": nome_eq,
-                "tipo": tipo_eq,
-                "modelo": mode_eq,
-                "localidade": {
-                    "nome":nome_lo
-                }
-            },
+            "equipamento": nome_eq,
             "inicio": str(start),
             "fim": str(end),
             "sequencia": seq

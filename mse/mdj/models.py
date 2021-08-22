@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.text import slugify
+from datetime import datetime
 
 
 class Agente(models.Model):
@@ -63,8 +64,8 @@ class Equipamento(models.Model):
 
 
 class Evento(models.Model):
-    inicio = models.DateTimeField(default=timezone.now())
-    fim = models.DateTimeField(default=timezone.now())
+    inicio = models.DateTimeField(default=datetime.now())
+    fim = models.DateTimeField(default=datetime.now())
     equipamento = models.ForeignKey('Equipamento',
                                     on_delete=models.CASCADE,
                                     related_name='evento')
