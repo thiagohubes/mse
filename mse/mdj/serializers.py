@@ -19,7 +19,7 @@ class LocalidadeSerializer(serializers.HyperlinkedModelSerializer):
 
 class EventoSerializer(serializers.HyperlinkedModelSerializer):
     #equipamento = EquipamentoSerializer(read_only=True)
-    equipamento = serializers.SlugRelatedField(queryset=Equipamento.objects.all(), slug_field='nome')
+    equipamento = serializers.SlugRelatedField(queryset=Equipamento.objects.all(), slug_field='id')
     class Meta:
         model = Evento
         fields = ('equipamento', 'inicio', 'fim', 'sequencia')

@@ -11,7 +11,7 @@ class LocalidadeAdmin(admin.ModelAdmin):
 
 @admin.register(Equipamento)
 class EquipamentoAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'tipo', 'modelo', 'localidade')
+    list_display = ('id', 'nome', 'tipo', 'modelo', 'localidade')
 
 @admin.register(Evento)
 class EventoAdmin(admin.ModelAdmin):

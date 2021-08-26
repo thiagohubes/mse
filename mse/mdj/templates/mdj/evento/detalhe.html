@@ -1,14 +1,34 @@
 {% extends "mdj/base.html" %}
 {% block title %}{{ evento.tag }}{% endblock %}
 {% block content %}
-    <h1>{{ evento.tag }}</h1>
-    <p>
-    Equipamento: {{evento.equipamento}}
-    </p>
-    <p>
-    Início: {{evento.inicio}}
-    </p>
-    <p>
-    Fim: {{evento.fim}}
-    </p>
+    <table class="detalhe">
+        <tr>
+            <td>Tag</td>
+            <td>{{ evento.tag }}</td>
+        </tr>
+        <tr>
+            <td>Equipamento</td>
+            <td>{{ evento.equipamento }}</td>
+        </tr>
+        <tr>
+            <td>Início</td>
+            <td>{{ evento.inicio }}</td>
+        </tr>
+        <tr>
+            <td>Fim</td>
+            <td>{{ evento.fim }}</td>
+        </tr>
+        <tr>
+            <td>Localidade</td>
+            <td>{{ evento.equipamento.localidade }}</td>
+        </tr>
+        <tr>
+            <td>Agente</td>
+            <td>{{ evento.equipamento.localidade.agente.all.0 }}</td>
+        </tr>
+        <tr>
+            <td>Tempo total do evento</td>
+            <td>{{ evento.tempo }}</td>
+        </tr>
+    </table>
 {% endblock %}

@@ -73,10 +73,6 @@ class Evento(models.Model):
     # access_token = models.CharField(max_length=100)
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    @property
-    def tag(self):
-        return f'{self.inicio.year}{self.inicio.month}{self.inicio.day}{self.inicio.hour}{self.inicio.minute}{self.inicio.second}{self.fim.minute}{self.fim.second}'
-
     class Meta:
         ordering = ('inicio',)
 
@@ -85,4 +81,8 @@ class Evento(models.Model):
 
     def get_absolute_url(self):
         return reverse('mdj:detalhe_de_evento', args=[self.sequencia,])
+
+    @property
+    def tag(self):
+        return f'{self.inicio.year}{self.inicio.month}{self.inicio.day}{self.inicio.hour}{self.inicio.minute}{self.inicio.second}{self.fim.minute}{self.fim.second}'
 

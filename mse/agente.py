@@ -2,10 +2,8 @@ from datetime import datetime
 import requests
 
 
-nome_eq = "DJ XYZ"
-tipo_eq = "disjuntor"
-mode_eq = "modelo-a"
-nome_lo = "SE XYZ"
+nome_eq = "DJ ABC"
+id_eq = 22
 seq = 0
 
 with open('sequencia.txt', 'r+') as f:
@@ -33,7 +31,7 @@ try:
         # send
         url = "http://127.0.0.1:8000/mdj/api/evento/"
         data = {
-            "equipamento": nome_eq,
+            "equipamento": id_eq,
             "inicio": str(start),
             "fim": str(end),
             "sequencia": seq

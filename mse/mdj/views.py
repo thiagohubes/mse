@@ -4,13 +4,61 @@ from rest_framework import viewsets, generics
 from .serializers import EventoSerializer, EquipamentoSerializer, LocalidadeSerializer, AgenteSerializer
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+from datetime import datetime, timedelta
+from django.db.models import Count
 
 
 def lista_de_eventos(request):
+    EQ_TIPO_1 = ['Siemens-3AT5', 'Siemens-3AT5-EI', 'Siemens-8DQ1']
+    EMERGENCIA_1 = 150
+    URGENCIA_1 = 75
+    MEDIA_1 = 50
+    MONIT_1 = 25
+    EMERGENCIA_2 = 100
+    URGENCIA_2 = 50
+    MEDIA_2 = 25
+    MONIT_2 = 12
+    estado = str()
     eventos = Evento.objects.all()
+    eventos_ultimo_dia = Evento.objects.filter(inicio__gte=datetime.now()-timedelta(days=1))
+    nome_local = list(tuple())
+    eventos_nome_local = list(tuple())
+    for evento in eventos_ultimo_dia:
+        nome = evento.equipamento.nome
+        local = evento.equipamento.localidade.nome
+        modelo = evento.equipamento.modelo
+        nome_local.append((nome, local, modelo))
+    nome_local = list(set(nome_local))
+    for nome, local, modelo in nome_local:
+        evento = Evento.objects.filter(equipamento__nome=nome, equipamento__localidade__nome=local, equipamento__modelo=modelo, inicio__gte=datetime.now()-timedelta(days=1))
+        contagem = evento.count()
+        if modelo in EQ_TIPO_1:
+            if contagem > EMERGENCIA_1:
+                estado = "Emergência"
+            elif contagem > URGENCIA_1:
+                estado = "Urgência"
+            elif contagem > MEDIA_1:
+                estado = "Média"
+            elif contagem > MONIT_1:
+                estado = "Monitoramento"
+            else:
+                estado = "OK"
+        else:
+            if contagem > EMERGENCIA_2:
+                estado = "Emergência"
+            elif contagem > URGENCIA_2:
+                estado = "Urgência"
+            elif contagem > MEDIA_2:
+                estado = "Média"
+            elif contagem > MONIT_2:
+                estado = "Monitoramento"
+            else:
+                estado = "OK"
+        eventos_nome_local.append((nome, local, modelo, contagem, estado))
     return render(request,
                   'mdj/evento/lista.html',
-                  {'eventos': eventos})
+                  {'eventos': eventos,
+                   'eventos_nome_local': eventos_nome_local})
 
 def detalhe_de_evento(request, sequencia):
     evento = get_object_or_404(Evento, sequencia=sequencia)

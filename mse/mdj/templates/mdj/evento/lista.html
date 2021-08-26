@@ -2,31 +2,45 @@
 
 {% block title %}Lista de Eventos{% endblock %}
 {% block content %} 
-    <h1>Lista de Eventos</h1>
-    <table>
-    <!--
-            <h2>
-                <a href="{{ evento.get_absolute_url }}">
-                    {{ evento.tag }}
-                </a>
-            </h2>
-        <p class="date">
-            Equipamento: {{ evento.equipamento }} - Início: {{ evento.inicio }} - Fim {{ evento.fim }}
-        </p>
-    -->
-        <tr>
-            <th>Tag</th>
-            <th>Equipamento</th>
-            <th>Início</th>
-            <th>Fim</th>
-        </tr>
-        {% for evento in eventos %}
-        <tr>
-            <td><a href="{{ evento.get_absolute_url }}">{{ evento.tag }}</a></td>
-            <td>{{ evento.equipamento }}</td>
-            <td>{{ evento.inicio }}</td>
-            <td>{{ evento.fim }}</td>
-        </tr>
-        {% endfor %}
+    <div>
+        <h1>Lista de Eventos</h1>
+        <table class="lista">
+            <tr>
+                <th>Tag</th>
+                <th>Equipamento</th>
+                <th>Início</th>
+                <th>Fim</th>
+            </tr>
+            {% for evento in eventos %}
+            <tr>
+                <td><a href="{{ evento.get_absolute_url }}">{{ evento.tag }}</a></td>
+                <td>{{ evento.equipamento }}</td>
+                <td>{{ evento.inicio }}</td>
+                <td>{{ evento.fim }}</td>
+            </tr>
+            {% endfor %}
     </table>
+    </div>
+    <div>
+        <h2>Estatísticas</h2>
+        <p>Registro de eventos de equipamentos.</p>
+        <table class="lista">
+            <tr>
+                <th>Nome</th>
+                <th>Local</th>
+                <th>Modelo</th>
+                <th>Contagem</th>
+                <th>Estado</th>
+            </tr>
+            {% for nome, local, modelo, contagem, estado in eventos_nome_local %}
+            <tr>
+                <td>{{ nome }}</a></td>
+                <td>{{ local }}</td>
+                <td>{{ modelo }}</td>
+                <td>{{ contagem }}</td>
+                <td>{{ estado }}</td>
+            </tr>
+            {% endfor %}
+    </table>
+    </div>
 {% endblock %}
